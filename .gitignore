@@ -1,0 +1,5 @@
+/.env
+/data_exports
+/fastgpt_updater.log
+/logs
+/main_collector.log

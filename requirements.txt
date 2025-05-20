@@ -1,0 +1,14 @@
+python-dotenv==1.1.0
+requests==2.32.3
+PyJWT==2.10.1
+google-analytics-data==0.18.18
+google-auth==2.39.0
+pandas>=2.0.0
+woocommerce>=3.0.0
+google-api-python-client>=2.0.0
+google-auth-httplib2>=0.1.0
+google-auth-oauthlib>=1.0.0
+mailchimp-marketing>=3.0.0
+facebook-business>=17.0.0
+google-ads>=22.0.0
+cryptography==45.0.2 
