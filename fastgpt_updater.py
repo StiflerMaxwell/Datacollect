@@ -151,6 +151,7 @@ def update_fastgpt_kb_with_content(
         response.raise_for_status()  # 如果HTTP状态码是4xx或5xx，则抛出异常
         
         response_data = response.json()
+        logger.info(f"FastGPT API完整响应: {response_data}")
         logger.info(f"FastGPT API响应: {response_data}")
         
         # 检查响应中是否有指示成功的字段，例如 id 或其他特定于API的成功代码
