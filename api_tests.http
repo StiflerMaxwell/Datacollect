@@ -1,0 +1,80 @@
+# -------------------------------------------------
+# API Service Tests for Vertu Data API
+# (确保您的 Flask API 服务 data_api_service.py 正在运行)
+# -------------------------------------------------
+
+# @name getWooCommerceOrders
+POST http://127.0.0.1:5001/get_data
+Content-Type: application/json
+
+{
+  "data_type": "db_woocommerce_orders",
+  "params": {
+    "days_ago": 7,
+    "max_orders": 3,
+    "status": "completed" 
+  }
+}
+
+###
+
+# @name getWooCommerceOrderItems
+POST http://127.0.0.1:5001/get_data
+Content-Type: application/json
+
+{
+  "data_type": "db_woocommerce_order_items",
+  "params": {
+    "order_id": 1001 # 替换为您数据库中实际存在的 order_id
+  }
+}
+
+###
+
+# @name getGA4DailyOverview
+POST http://127.0.0.1:5001/get_data
+Content-Type: application/json
+
+{
+  "data_type": "db_ga4_daily_overview",
+  "params": {
+    "start_date": "2023-10-01", 
+    "end_date": "2023-10-07"
+  }
+}
+
+###
+
+# @name testInvalidDataType
+POST http://127.0.0.1:5001/get_data
+Content-Type: application/json
+
+{
+  "data_type": "non_existent_type",
+  "params": {}
+}
+
+###
+
+# @name testMissingRequiredParam
+POST http://127.0.0.1:5001/get_data
+Content-Type: application/json
+
+{
+  "data_type": "db_woocommerce_order_items",
+  "params": {} # 缺少 order_id
+}
+
+### 
+
+# 可以在这里添加更多您API服务支持的 data_type 测试
+# 例如：
+# POST http://127.0.0.1:5001/get_data
+# Content-Type: application/json
+#
+# {
+#   "data_type": "db_ga4_traffic_sources",
+#   "params": {
+#     "days_ago": 1
+#   }
+# }

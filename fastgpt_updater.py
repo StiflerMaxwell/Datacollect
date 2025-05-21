@@ -69,8 +69,8 @@ def update_fastgpt_kb_with_content(
         base_url = base_url[:-1]
     
     # 如果 base_url 包含了 /api，而目标端点也以 /api 开头，需要避免重复
-    # 正确的API端点: /api/core/dataset/data/push
-    target_api_path = "/api/core/dataset/data/push"
+    # 正确的API端点: /api/core/dataset/data/pushData
+    target_api_path = "/api/core/dataset/data/pushData"
     
     if base_url.endswith('/api') and target_api_path.startswith('/api'):
         # base_url已经是 https://.../api，目标是 /api/core...
@@ -110,11 +110,18 @@ def update_fastgpt_kb_with_content(
         "Content-Type": "application/json"
     }
 
+    # 读取 collectionId
+    collection_id = os.getenv("FASTGPT_COLLECTION_ID")
+    if not collection_id:
+        logger.error("未检测到环境变量 FASTGPT_COLLECTION_ID")
+        return False
+
     # Payload for POST /api/core/dataset/data/push
     # kb_id from args maps to datasetId
     # file_name from args maps to sourceName
     data_payload = {
-        "datasetId": kb_id,
+        "collectionId": collection_id,
+        "trainingType": "chunk",
         "data": [
             {
                 "q": content,
@@ -122,7 +129,7 @@ def update_fastgpt_kb_with_content(
                 "sourceName": file_name, # Name of the source file
             }
         ],
-        "mode": mode, 
+        # "mode": mode, 
         # prompt is optional for this endpoint based on docs, 
         # but including it if provided, FastGPT might ignore if not applicable
         "prompt": prompt 
@@ -202,9 +209,9 @@ def update_fastgpt_kb_with_content(
 if __name__ == '__main__':
     # 测试代码 (需要配置相关的环境变量)
     logger.info("测试FastGPT更新模块...")
-    API_KEY = os.getenv("FASTGPT_API_KEY")
-    BASE_URL = os.getenv("FASTGPT_BASE_URL")
-    KB_ID = os.getenv("FASTGPT_KB_ID")
+    API_KEY = "fastgpt-x79YmADkoOOc8QoZ2rCfT5o2R0gsGDYvgm1vXVZ4slNrIiUiS8D9DXbTf"
+    BASE_URL = "https://fastgpt.vertu.cn"
+    KB_ID = "682c8b22a3d78b91b9bdc6ec"
 
     if not all([API_KEY, BASE_URL, KB_ID]):
         logger.error("测试FastGPT更新需要环境变量: FASTGPT_API_KEY, FASTGPT_BASE_URL, FASTGPT_KB_ID")
